@@ -1,0 +1,32 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<div class="col-md-6 col-md-offset-2 well">
+<form (submit)="onSubmit()">
+
+  Your Name:
+  <input type="text" name="yourName"
+  required
+  minlength="2"
+  maxlength="24"
+  [(ngModel)]="users.yourName"
+  #yourName='ngModel' class="form-control"><br>
+
+  <div *ngIf=" (yourName.errors && ( yourName.dirty || yourName.touched))"
+     class="alert alert-danger">
+    <div [hidden]="!yourName.errors.required">
+      First Name is required
+    </div>
+    <div [hidden]="!yourName.errors.minlength">
+      First Name must be at least 4 characters long.
+    </div>
+    <div [hidden]="!yourName.errors.maxlength">
+      First Name cannot be more than 24 characters long.
+    </div>
+ </div>
+
+
+  <input type="submit" value="Login">
+</form>
+
+</div>
