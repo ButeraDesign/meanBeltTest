@@ -10,8 +10,8 @@ export class HttpService {
   constructor(private _http: Http,private _router:Router) { }
 
 
-  createStar(newItem){
-    console.log('createStar');
+  createThought(newItem){
+    console.log('create Thought');
     console.log(newItem);
     this._http.post('/createItem',newItem).map(data=>data.json()).toPromise()
     .then((data) =>{
@@ -24,7 +24,7 @@ export class HttpService {
   }
 
   editStar(star,id){
-    console.log('updateStar')
+    console.log('update Star')
     this._http.post('/editItem/'+id,star).map(data=>data.json()).toPromise()
     .then((data) =>{
       console.log('IN Redir to dashboard');
@@ -35,9 +35,9 @@ export class HttpService {
 
   }
 
-  createNote(note,starId){
-    console.log('create Note')
-    this._http.post('/addNote/'+starId,note).map(data=>data.json()).toPromise()
+  createAnswer(answer,id){
+    console.log('create answer')
+    this._http.post('/addAnswer/'+id,answer).map(data=>data.json()).toPromise()
     .then((data) =>{
       console.log('IN Redir to dashboard');
       this._router.navigate(['/dashboard'])
@@ -47,9 +47,9 @@ export class HttpService {
 
   }
 
-  updateStar(star,id){
-    console.log('updateStar')
-    this._http.post('/editItem/'+id,star).map(data=>data.json()).toPromise()
+  updateStars(answer,id){
+    console.log('update Star')
+    this._http.post('/editItem/'+id,answer).map(data=>data.json()).toPromise()
     .then((data) =>{
       console.log('IN Redir to dashboard');
     this._router.navigate(['/dashboard'])
@@ -65,27 +65,19 @@ export class HttpService {
 
   }
 
-  oneStar(id) {
+  //one item with populate
+  oneAnswer(id) {
       return this._http.get('/oneItem/'+id).map(data=>data.json()).toPromise()
 
   }
 
-  allStars() {
+  //all items with populate
+  allThoughts() {
 
     return this._http.get('/allItems').map(data=>data.json()).toPromise()
-    //.then((data) =>{
-    //  console.log(data);
-    //  console.log('IN Redir to showall');
-      //this._router.navigate(['/showall'])
-
-  //  })
-  //  .catch( err => { console.log(err); })
 
 
   }
-
-
-
 
 
 }

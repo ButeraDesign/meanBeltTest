@@ -1,0 +1,27 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<div class="col-md-6 col-md-offset-2 well">
+
+<form (submit)="onSubmit()">
+
+ <h2> What is the answer to the ultimate question?</h2>
+ <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a> | <a routerLink="/" routerLinkActive="active">Logout</a><br><br>
+
+  Your Answer:<br>
+  <textarea required
+  [(ngModel)]="item.answer"
+  #thought='ngModel' class="form-control" rows="4" cols="50" name="thought">
+</textarea><br>
+
+  Supporting Details(optional):<br>
+  <textarea
+  [(ngModel)]="item.details"
+  #discription='ngModel' class="form-control" rows="4" cols="50" name="discription">
+  </textarea>
+
+
+  <input type="submit" value="Submit">
+</form>
+<button (click)='clearForm()'>clear</button>
+</div>

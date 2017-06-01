@@ -1,0 +1,28 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<div class="col-md-8 col-md-offset-2 well">
+  <h2>Answer to Ultimate Question</h2>
+
+
+  <div *ngFor='let answer of myAnswers'>
+    <h4>{{answer.author}}:</h4>
+    <p>&nbsp;&nbsp;&nbsp;{{answer.answer}}</p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{answer.details}}</p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{answer.createdAt | date :  "dd.MM.y" }}</p>
+  <a routerLink="/answer/{{answer._thought}}" routerLinkActive="active">Answer this Question</a>
+
+  <p>Likes: {{answer.likes}}</p>
+
+  <form (submit)="onSubmitLike(answer.likes)">
+    <input type="submit" value="Like">
+  </form>
+
+
+
+  <hr style="color: black;border-width: 3px;">
+
+  </div>
+
+</div>

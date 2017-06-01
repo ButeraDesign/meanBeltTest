@@ -1,0 +1,28 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<div class="col-md-8 col-md-offset-2 well">
+
+<h2> Hi {{users.yourName}} ! </h2>
+
+ <a routerLink="/create" routerLinkActive="active">Add a Deep Thought</a> | <a routerLink="/" routerLinkActive="active">Logout</a>
+
+<table class="table well">
+  <tr>
+    <th>Thought</th>
+    <th>Answers</th>
+    <th>Last Answered</th>
+    <th>Actions</th>
+  </tr>
+  <tr *ngFor='let thought of allThoughts'>
+    <td>{{thought.thought}}</td>
+    <td>{{thought.answers.length}}</td>
+    <td>{{thought.answers[0].updatedAt | date :  "dd.MM.y" }}</td>
+    <td><button (click)='setAnswers(thought._id)'>show</button> <a routerLink="/answer/{{thought._id}}" routerLinkActive="active">Answer</a></td>
+  </tr>
+</table>
+<br><br>
+
+<app-allanswers [(myAnswers)]='allAnswers'>  </app-allanswers>
+</div>

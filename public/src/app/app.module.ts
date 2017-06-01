@@ -8,11 +8,19 @@ import { routing } from './routes';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { CreateComponent } from './create/create.component';
+import { AnswerComponent } from './answer/answer.component';
+import { AllanswersComponent } from './allanswers/allanswers.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    DashboardComponent,
+    CreateComponent,
+    AnswerComponent,
+    AllanswersComponent
   ],
   imports: [
     BrowserModule,

@@ -15,24 +15,27 @@ mongoose.Promise = global.Promise;
 
 var Schema = mongoose.Schema;
 // define Post Schema
-var StarSchema = new mongoose.Schema({
- name: {type: String, required: true, minlength: 2 },
+var ThoughtSchema = new mongoose.Schema({
  author: {type: String, required: true, minlength: 2 },
- discription: {type: String, required: true, minlength: 3 },
- notes: [{type: Schema.Types.ObjectId, ref: 'Note'}]
+ thought: {type: String, required: true, minlength: 10 },
+ discription: {type: String, minlength: 3 },
+ answers: [{type: Schema.Types.ObjectId, ref: 'Answer'}]
 }, {timestamps: true });
 // define Comment Schema
-var NoteSchema = new mongoose.Schema({
- _star: {type: Schema.Types.ObjectId, ref: 'Star'},
+var AnswerSchema = new mongoose.Schema({
+ _thought: {type: Schema.Types.ObjectId, ref: 'Thought'},
  author: {type: String, required: true, minlength: 2 },
- text: {type: String, required: true, minlength: 3 }
+ answer: {type: String, required: true, minlength: 3 },
+ details: {type: String, minlength: 3 },
+ likes: {type: Number}
 }, {timestamps: true });
 // set our models by passing them their respective Schemas
-mongoose.model('Star', StarSchema);
-mongoose.model('Note', NoteSchema);
+mongoose.model('Thought', ThoughtSchema);
+mongoose.model('Answer', AnswerSchema);
 // store our models in variables
-var Star = mongoose.model('Star');
-var Note = mongoose.model('Note');
+var Thought = mongoose.model('Thought');
+var Answer = mongoose.model('Answer');
+
 
 
 //process route
@@ -40,8 +43,8 @@ app.post('/createItem', function(req, res){
   console.log("POST DATA", req.body);
   //item ={productName:'',sellerName: '',startingBid:'',discription:'',endDate:''};
 
-  var theItem = new Star({author: req.body.author, name: req.body.starName, discription: req.body.discription});
-  console.log("NEW Star");
+  var theItem = new Thought({author: req.body.author, thought: req.body.thought, discription: req.body.discription});
+  console.log("NEW Thought");
   theItem.save(function(err){
     if(err){
       console.log('error');
@@ -55,6 +58,7 @@ app.post('/createItem', function(req, res){
     }
   })
 });
+
 
 app.post('/editItem/:id', function(req, res){
    console.log("EDIT ID");
@@ -78,9 +82,9 @@ app.post('/editItem/:id', function(req, res){
 
  app.get('/getItem/:id', function(req, res){
 
-    console.log("Server get auction id:",req.params.id);
+    console.log("Server get thought id:",req.params.id);
 
-    Star.findOne({_id: req.params.id} , function(err, theItem){
+    Thought.findOne({_id: req.params.id} , function(err, theItem){
       if(err){
         console.log('error')
      }
@@ -95,11 +99,11 @@ app.post('/editItem/:id', function(req, res){
   });//get ends
 
 
-
+  //one item with populate
   app.get('/oneItem/:id', function(req, res){
 
-   Star.find({_id: req.params.id})
-   .populate('notes')
+   Thought.find({_id: req.params.id})
+   .populate('answers')
    .exec(function(err, items) {
      if(err){
        // console.log('error')
@@ -116,9 +120,10 @@ app.post('/editItem/:id', function(req, res){
   });
 
 
+//all items with populate
  app.get('/allItems', function(req, res){
-  Star.find({})
-  .populate('notes')
+  Thought.find({})
+  .populate('answers')
   .exec(function(err, items) {
     if(err){
       // console.log('error')
@@ -134,23 +139,25 @@ app.post('/editItem/:id', function(req, res){
 
 });
 
-  // route for creating one comment with the parent post id
-  app.post('/addNote/:id', function (req, res){
-    console.log('Add Note');
-    Star.findOne({_id: req.params.id}, function(err, star){
+  // route for creating one note with the parent post id
+  app.post('/addAnswer/:id', function (req, res){
+    console.log('Add Answer');
+    Thought.findOne({_id: req.params.id}, function(err, thought){
            console.log(req.params.id);
            console.log(req.body.author);
-           console.log(req.body.discription);
-           var note = new Note({ author: req.body.author, text:req.body.discription});
-           note._star = star._id;
-           console.log(note);
-           star.notes.push(note);
-           note.save(function(err){
-                   star.save(function(err, note){
+           console.log(req.body.answer);
+           console.log(req.body.details);
+           var answer = new Answer({ author: req.body.author, answer:req.body.answer, details:req.body.details, likes:0});
+           answer._thought = thought._id;
+           console.log(answer);
+           thought.answers.push(answer);
+           console.log('did push');
+           answer.save(function(err){
+                   thought.save(function(err, answer){
                          if(err) {
                            console.log('Error');
                            console.log(err);
-                           console.log(note.error);
+                           console.log(answer.error);
                            //res.render('index', {title: 'you have errors!', errorsComment: note.errors})
                           }
                          else {

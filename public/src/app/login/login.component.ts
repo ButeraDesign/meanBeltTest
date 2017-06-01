@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
   onSubmit(){
 
     console.log('LoginComponent');
-    this._router.navigate(['/home'])
+    this._router.navigate(['/dashboard'])
 
   }
 

@@ -1,0 +1,27 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<div class="col-md-6 col-md-offset-2 well">
+
+<form (submit)="onSubmit()">
+
+ <h2> New Deep Thought</h2>
+ <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a> | <a routerLink="/" routerLinkActive="active">Logout</a><br><br>
+
+  Deep Thought:<br>
+  <textarea required
+  [(ngModel)]="item.thought"
+  #thought='ngModel' class="form-control" rows="4" cols="50" name="thought">
+</textarea><br>
+
+  Discription:(optional)<br>
+  <textarea
+  [(ngModel)]="item.discription"
+  #discription='ngModel' class="form-control" rows="4" cols="50" name="discription">
+  </textarea>
+
+
+  <input type="submit" value="Submit">
+  <button (click)='clearForm()'>clear</button>
+</form>
+</div>
